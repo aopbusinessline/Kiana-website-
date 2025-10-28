@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>For You ✨</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg1: #FFF1F8;
+      --bg2: #F0FBFF;
+      --accent: #FF6B9A;
+      --muted: #6B7280;
+      --card: rgba(255,255,255,0.72);
+      --glass: rgba(255,255,255,0.28);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,'Helvetica Neue',Arial}
+    body{
+      background: linear-gradient(135deg,var(--bg1),var(--bg2));
+      display:flex;align-items:center;justify-content:center;padding:32px;
+    }
+    .wrap{
+      width:100%;max-width:1100px;background:var(--card);backdrop-filter:blur(6px);border-radius:18px;padding:28px;box-shadow:0 10px 30px rgba(15,23,42,0.12);
+    }
+    header{display:flex;gap:20px;align-items:center}
+    .avatar{
+      width:96px;height:96px;border-radius:16px;overflow:hidden;flex:0 0 96px;border:3px solid rgba(255,255,255,0.6);
+    }
+    .avatar img{width:100%;height:100%;object-fit:cover;display:block}
+    h1{font-family:'Playfair Display',serif;margin:0;font-size:28px}
+    p.lead{margin:6px 0 0;color:var(--muted)}
+
+    .message{
+      margin-top:18px;padding:16px;border-radius:12px;background:linear-gradient(180deg,rgba(255,255,255,0.6),rgba(255,255,255,0.45));
+      box-shadow:inset 0 1px 0 rgba(255,255,255,0.6);
+    }
+    .message p{margin:0;font-size:15px}
+
+    .grid{
+      margin-top:20px;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px
+    }
+    figure{margin:0;border-radius:12px;overflow:hidden;position:relative;cursor:pointer}
+    figure img{width:100%;height:220px;object-fit:cover;display:block;transition:transform .35s ease}
+    figure:hover img{transform:scale(1.05)}
+    figcaption{position:absolute;left:0;right:0;bottom:0;padding:10px 12px;font-size:13px;background:linear-gradient(180deg,transparent,rgba(0,0,0,0.45));color:#fff}
+
+    .controls{display:flex;gap:10px;align-items:center;margin-top:18px}
+    .btn{background:var(--accent);color:white;padding:10px 14px;border-radius:10px;border:0;font-weight:600;cursor:pointer}
+    .btn.ghost{background:transparent;color:var(--accent);border:1px solid rgba(255,107,154,0.18)}
+
+    /* lightbox */
+    .lightbox{position:fixed;inset:0;background:rgba(15,23,42,0.6);display:flex;align-items:center;justify-content:center;z-index:60;opacity:0;pointer-events:none;transition:opacity .2s}
+    .lightbox.open{opacity:1;pointer-events:auto}
+    .lightbox .panel{max-width:92vw;max-height:92vh;border-radius:12px;overflow:hidden;background:var(--glass);display:flex;align-items:center;justify-content:center;padding:18px;}
+    .lightbox img{max-width:100%;max-height:100%;object-fit:contain}
+    .close{position:absolute;top:22px;right:22px;background:rgba(255,255,255,0.9);border-radius:999px;padding:8px;cursor:pointer}
+
+    footer{margin-top:18px;font-size:13px;color:var(--muted);text-align:center}
+
+    @media (max-width:560px){
+      .avatar{width:72px;height:72px}
+      figure img{height:160px}
+    }
+
+    /* small accessibility focus styles */
+    figure:focus{outline:3px solid rgba(255,107,154,0.18)}
+  </style>
+</head>
+<body>
+  <main class="wrap" aria-label="Love website">
+    <header>
+      <div class="avatar"><img src="images/avatar.jpg" alt="Dein Lieblingsfoto"></div>
+      <div>
+        <h1>Für dich — <span style="color:var(--accent)">immer</span></h1>
+        <p class="lead">Eine kleine Sammlung meiner Lieblingsmomente. Ich liebe dich.</p>
+      </div>
+    </header>
+
+    <section class="message" aria-labelledby="msg">
+      <h2 id="msg" style="font-size:16px;margin:0 0 8px;font-weight:700">Kurz & ehrlich</h2>
+      <p>Du bist mein Lieblingskapitel — hier sind ein paar Fotos, die mir besonders viel bedeuten. Klick ein Bild, um es groß anzusehen. Ersetze die Platzhalterbilder im Ordner <code>images/</code> mit deinen eigenen.</p>
+    </section>
+
+    <section class="gallery">
+      <div class="grid" id="grid">
+        <!-- Replace these image paths with your own photos (jpg/png). Keep filenames short. -->
+        <figure tabindex="0" data-full="images/photo1.jpg">
+          <img src="images/photo1-thumb.jpg" alt="Foto 1">
+          <figcaption>Dein Lächeln — der beste Morgen</figcaption>
+        </figure>
+        <figure tabindex="0" data-full="images/photo2.jpg">
+          <img src="images/photo2-thumb.jpg" alt="Foto 2">
+          <figcaption>Unser Tag am See</figcaption>
+        </figure>
+        <figure tabindex="0" data-full="images/photo3.jpg">
+          <img src="images/photo3-thumb.jpg" alt="Foto 3">
+          <figcaption>Unvergesslicher Moment</figcaption>
+        </figure>
+        <figure tabindex="0" data-full="images/photo4.jpg">
+          <img src="images/photo4-thumb.jpg" alt="Foto 4">
+          <figcaption>Einfach du</figcaption>
+        </figure>
+      </div>
+
+      <div class="controls">
+        <button class="btn" id="prev">Previous</button>
+        <button class="btn" id="next">Next</button>
+        <button class="btn ghost" id="downloadAll">Download all (zip)</button>
+      </div>
+    </section>
+
+    <footer>Hast du Änderungswünsche? Sag mir, welche Bilder oder Texte ich ändern soll — ich mach's.</footer>
+  </main>
+
+  <!-- lightbox -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="close" id="close">✕</div>
+    <div class="panel" id="panel"><img src="" alt="Großansicht"></div>
+  </div>
+
+  <script>
+    // Basic lightbox + next/prev logic
+    const figures = Array.from(document.querySelectorAll('figure'));
+    const lightbox = document.getElementById('lightbox');
+    const panelImg = document.querySelector('.panel img');
+    let current = 0;
+
+    function openAt(i){
+      const f = figures[i % figures.length];
+      const full = f.getAttribute('data-full');
+      panelImg.src = full;
+      panelImg.alt = f.querySelector('figcaption').textContent || 'Foto';
+      lightbox.classList.add('open');
+      lightbox.setAttribute('aria-hidden','false');
+      current = i;
+    }
+
+    figures.forEach((f, i) => {
+      f.addEventListener('click', ()=> openAt(i));
+      f.addEventListener('keydown', (e)=>{ if(e.key === 'Enter' || e.key === ' ') openAt(i); });
+    });
+
+    document.getElementById('close').addEventListener('click', ()=>{ lightbox.classList.remove('open'); lightbox.setAttribute('aria-hidden','true'); panelImg.src = ''; });
+    lightbox.addEventListener('click', (e)=>{ if(e.target === lightbox) { lightbox.classList.remove('open'); lightbox.setAttribute('aria-hidden','true'); panelImg.src = ''; } });
+
+    document.getElementById('next').addEventListener('click', ()=> openAt((current+1)%figures.length));
+    document.getElementById('prev').addEventListener('click', ()=> openAt((current-1+figures.length)%figures.length));
+
+    // Download all: naive approach - create a simple list link to each full image in a new tab
+    document.getElementById('downloadAll').addEventListener('click', ()=>{
+      const urls = figures.map(f=>f.getAttribute('data-full'));
+      const list = urls.join('\n');
+      alert('Öffnet die Bilddateien in neuen Tabs. Zip-Download musst du serverseitig erstellen.\n\n' + list);
+      urls.forEach(u=>window.open(u, '_blank'));
+    });
+
+    // Optional: keyboard navigation
+    document.addEventListener('keydown', (e)=>{
+      if(!lightbox.classList.contains('open')) return;
+      if(e.key === 'ArrowRight') openAt((current+1)%figures.length);
+      if(e.key === 'ArrowLeft') openAt((current-1+figures.length)%figures.length);
+      if(e.key === 'Escape') { lightbox.classList.remove('open'); lightbox.setAttribute('aria-hidden','true'); panelImg.src = ''; }
+    });
+  </script>
+
+  <!--
+    HOW TO USE
+    1) Replace images/photo*-thumb.jpg and images/photo*.jpg with your real pictures.
+    2) Edit the captions inside <figcaption> to add personal messages.
+    3) Host this single HTML file with an 'images' folder beside it.
+    4) If you want me to convert this into a small React app or add a download-zip backend, tell me.
+  -->
+</body>
+</html>
